@@ -1,27 +1,30 @@
-Enter<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إنشاء حساب | مطعم خيرات الشام</title>
+    <title>إنشاء حساب | مطعم لذيذ</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
         
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1544145945-f904253d0c7b?auto=format&fit=crop&w=1350&q=80'); /* خلفية عصائر طازجة */
+                        url('https://images.unsplash.com/photo-1544145945-f904253d0c7b?auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
+            background-attachment: fixed;
             background-position: center;
+            padding: 20px;
         }
 
+        /* حاوية التسجيل */
         .main-container {
             display: flex;
             background: rgba(255, 255, 255, 0.1);
@@ -29,7 +32,7 @@ Enter<!DOCTYPE html>
             border-radius: 25px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             width: 900px;
-            max-width: 95%;
+            max-width: 100%;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.2);
             animation: slideUp 0.8s ease-out;
@@ -40,18 +43,15 @@ Enter<!DOCTYPE html>
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* الجزء الأيمن: صورة جانبية ثابتة للفطائر */
         .side-image {
             flex: 1;
-            background: url('https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80');
+            background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80');
             background-size: cover;
             background-position: center;
             display: none;
         }
-
         @media (min-width: 768px) { .side-image { display: block; } }
 
-        /* الجزء الأيسر: فورم التسجيل */
         .register-section {
             flex: 1.2;
             padding: 30px 45px;
@@ -61,19 +61,16 @@ Enter<!DOCTYPE html>
 
         .header-box img { width: 50px; margin-bottom: 10px; }
         h2 { color: #2d3436; margin: 0; font-size: 24px; }
-        p { color: #636e72; font-size: 13px; margin-bottom: 25px; }
+        p { color: #636e72; font-size: 14px; margin-bottom: 25px; }
 
-        /* تنسيق الحقول */
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* حقلين بجانب بعض للشاشات الكبيرة */
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 15px;
         }
-
         @media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
 
-        .input-group { position: relative; }
         input {
             width: 100%;
             padding: 12px 15px;
@@ -81,7 +78,6 @@ Enter<!DOCTYPE html>
             border-radius: 12px;
             outline: none;
             background: #f9f9f9;
-            transition: 0.3s;
         }
         input:focus { border-color: #ff4757; background: #fff; box-shadow: 0 4px 10px rgba(255,71,87,0.1); }
 
@@ -98,12 +94,9 @@ Enter<!DOCTYPE html>
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
         }
         .reg-btn:hover { transform: scale(1.02); box-shadow: 0 8px 15px rgba(255,71,87,0.3); }
 
-        /* أزرار التواصل الاجتماعي المصغرة */
         .social-text { margin: 20px 0 15px; color: #a4b0be; font-size: 12px; display: flex; align-items: center; }
         .social-text::before, .social-text::after { content: ""; flex: 1; height: 1px; background: #eee; margin: 0 10px; }
 
@@ -113,62 +106,152 @@ Enter<!DOCTYPE html>
             border-radius: 50%;
             border: 1px solid #eee;
             display: flex; align-items: center; justify-content: center;
-            font-size: 20px; cursor: pointer; transition: 0.3s;
+            font-size: 20px; cursor: pointer;
         }
-        .icon-circle.google:hover { background: #db4437; color: white; border-color: #db4437; }
-        .icon-circle.fb:hover { background: #4267B2; color: white; border-color: #4267B2; }
+
+        /* --- واجهة المنيو (مخفية) --- */
+        #menu-section {
+            display: none;
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .menu-header { text-align: center; margin-bottom: 40px; }
+        .menu-header h1 { color: #2d3436; font-size: 32px; margin-bottom: 10px; }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 1px solid #f1f2f6;
+        }
+        .food-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .food-card img { width: 100%; height: 180px; object-fit: cover; }
+        
+        .food-info { padding: 20px; text-align: center; }
+        .food-info h3 { margin: 0 0 10px; color: #2d3436; }
+        .food-info .price { color: #ff4757; font-size: 1.2rem; font-weight: bold; }
+        
+        .order-btn {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: 1.5px solid #ff4757;
+            background: transparent;
+            color: #ff4757;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .order-btn:hover { background: #ff4757; color: white; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
     </style>
 </head>
 <body>
 
-    <div class="main-container">
+    <div class="main-container" id="auth-container">
         <div class="side-image"></div>
-
         <div class="register-section">
             <div class="header-box">
                 <img src="https://cdn-icons-png.flaticon.com/512/1046/1046771.png" alt="logo">
                 <h2>عضوية جديدة</h2>
-                <p>انضم إلينا واستمتع بخصم 15% على طلبك الأول!</p>
+                <p>سجل الآن للانضمام إلى عائلة مطعم لذيذ</p>
             </div>
 
-            <form>
+            <form id="regForm">
                 <div class="form-grid">
-                    <div class="input-group">
-                        <input type="text" placeholder="الاسم الأول" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" placeholder="اسم العائلة" required>
-                    </div>
-                    <div class="input-group full-width">
-                        <input type="email" placeholder="البريد الإلكتروني" required>
-                    </div>
-                    <div class="input-group full-width">
-                        <input type="tel" placeholder="رقم الهاتف (مثال: 05xxxx)" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" placeholder="كلمة المرور" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" placeholder="تأكيد الكلمة" required>
-                    </div>
+                    <div class="input-group"><input type="text" placeholder="الاسم الأول" required></div>
+                    <div class="input-group"><input type="text" placeholder="اسم العائلة" required></div>
+                    <div class="input-group full-width"><input type="email" id="email" placeholder="البريد الإلكتروني" required></div>
+                    <div class="input-group full-width"><input type="tel" placeholder="رقم الهاتف" required></div>
+                    <div class="input-group"><input type="password" id="pass" placeholder="كلمة المرور" required></div>
+                    <div class="input-group"><input type="password" placeholder="تأكيد الكلمة" required></div>
                 </div>
-
                 <button type="submit" class="reg-btn">إنشاء حسابي</button>
             </form>
 
             <div class="social-text">أو التسجيل بواسطة</div>
-
             <div class="social-icons">
-                <div class="icon-circle google"><i class="fab fa-google"></i></div>
-                <div class="icon-circle fb"><i class="fab fa-facebook-f"></i></div>
+                <div class="icon-circle"><i class="fab fa-google"></i></div>
+                <div class="icon-circle"><i class="fab fa-facebook-f"></i></div>
             </div>
-
-            <p style="margin-top: 20px;">
-                لديك حساب بالفعل؟ <a href="#" style="color: #ff4757; text-decoration: none; font-weight: bold;">دخول</a>
-            </p>
+            <p style="margin-top: 20px;">لديك حساب بالفعل؟ <a href="#" style="color: #ff4757; text-decoration: none; font-weight: bold;">دخول</a></p>
         </div>
     </div>
 
+    <div id="menu-section">
+        <div class="menu-header">
+            <h1>قائمة مطعم لذيذ الشهية 🍔</h1>
+            <p>نقدم لك أفضل الأطباق بأعلى جودة</p>
+        </div>
+        
+        <div class="menu-grid">
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500" alt="برجر">
+                <div class="food-info">
+                    <h3>برجر لحم فاخر</h3>
+                    <div class="price">35 ريال</div>
+                    <button class="order-btn">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500" alt="بيتزا">
+                <div class="food-info">
+                    <h3>بيتزا إيطالية مشكلة</h3>
+                    <div class="price">42 ريال</div>
+                    <button class="order-btn">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=500" alt="مشويات">
+                <div class="food-info">
+                    <h3>طبق مشويات مشكل</h3>
+                    <div class="price">55 ريال</div>
+                    <button class="order-btn">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1544145945-f904253d0c7b?auto=format&fit=crop&w=500" alt="عصير">
+                <div class="food-info">
+                    <h3>عصير برتقال طازج</h3>
+                    <div class="price">15 ريال</div>
+                    <button class="order-btn">إضافة للسلة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // إخفاء واجهة التسجيل
+            document.getElementById('auth-container').style.display = 'none';
+            
+            // إظهار المنيو
+            const menu = document.getElementById('menu-section');
+            menu.style.display = 'block';
+            
+            // تغيير الخلفية
+            document.body.style.background = "#f8f9fa";
+            document.body.style.alignItems = "flex-start";
+        });
+    </script>
 </body>
 </html>
