@@ -3,275 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم لذيذ | تجربة 3D فاخرة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>مطعم لذيذ | تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+        /* --- المتغيرات والتنسيقات العامة --- */
         :root {
-            --primary: #ff416c; /* أحمر ناري */
-            --secondary: #ff4b2b; /* برتقالي محمر */
-            --accent: #ffb800; /* أصفر ذهبي */
-            --glass: rgba(255, 255, 255, 0.15);
-            --shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            --primary-color: #F44336; /* اللون الأحمر من الكود الثاني */
+            --accent-color: #FFC107;  /* اللون الأصفر من الكود الثاني */
+            --bg-color: #f8f9fa;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --white: #ffffff;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            --whatsapp-color: #25D366;
         }
 
-        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; transition: 0.3s ease; }
+        
+        /* التدرج اللوني من الكود الثاني */
         body {
             min-height: 100vh;
+            background: linear-gradient(135deg, #FFC107, #F44336);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- الهيدر (يظهر بعد الدخول) --- */
+        header {
+            display: none; position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.95); padding: 15px 8%;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1); z-index: 1000;
+            justify-content: space-between; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo { font-weight: 700; font-size: 26px; color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        
+        .user-menu { position: relative; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--text-dark); padding: 5px 10px; border-radius: 50px; background: #f1f2f6; }
+        
+        .dropdown {
+            position: absolute; top: 120%; left: 0; background: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-radius: 15px; width: 240px;
+            display: none; flex-direction: column; overflow: hidden;
+            animation: fadeInDown 0.4s ease; border: 1px solid #eee;
+        }
+        .dropdown a { padding: 15px 20px; text-decoration: none; color: var(--text-dark); font-size: 15px; border-bottom: 1px solid #f8f9fa; display: flex; align-items: center; gap: 12px; }
+        .dropdown a:hover { background: #fff5f6; color: var(--primary-color); }
+        .user-menu:hover .dropdown { display: flex; }
+
+        /* --- حاوية تسجيل الدخول (من الكود الثاني والثالث) --- */
+        .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            /* تدرج لوني مودرن يجمع الأصفر والأحمر */
-            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 50%, #ffb800 100%);
-            background-attachment: fixed;
-            overflow-x: hidden;
-        }
-
-        /* تأثير الخلفية العائمة (اختياري لزيادة الـ 3D) */
-        body::before {
-            content: "";
-            position: absolute;
-            width: 300px; height: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            top: -100px; right: -100px;
-            z-index: -1;
-        }
-
-        /* --- تصميم الكاريد ثلاثي الأبعاد --- */
-        .auth-card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 30px;
             width: 100%;
-            max-width: 420px;
+        }
+
+        .login-box {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
             text-align: center;
-            position: relative;
-            /* ظل ثلاثي الأبعاد عميق */
-            box-shadow: 20px 20px 60px rgba(0,0,0,0.15), 
-                        -5px -5px 20px rgba(255,255,255,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
-            transform-style: preserve-3d;
-            animation: float 4s ease-in-out infinite;
+            width: 400px;
+            max-width: 100%;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotateX(0deg); }
-            50% { transform: translateY(-15px) rotateX(2deg); }
-        }
+        h1 { color: var(--primary-color); margin-bottom: 30px; font-weight: 700; }
 
-        .auth-card h2 {
-            color: var(--secondary);
-            font-size: 2rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
+        .input-group { margin-bottom: 20px; }
 
-        .auth-card p { color: #666; margin-bottom: 30px; }
-
-        /* --- المدخلات بتصميم ناعم --- */
-        .input-group { position: relative; margin-bottom: 20px; }
-        
         input {
             width: 100%;
-            padding: 15px 20px;
-            border: none;
-            background: #f0f0f0;
-            border-radius: 15px;
-            outline: none;
-            font-size: 16px;
-            box-shadow: inset 4px 4px 8px #d1d1d1, 
-                        inset -4px -4px 8px #ffffff; /* تأثير Neumorphism */
-            transition: 0.3s;
-        }
-
-        input:focus {
-            box-shadow: inset 2px 2px 5px #d1d1d1, 
-                        inset -2px -2px 5px #ffffff,
-                        0 0 10px rgba(255, 75, 43, 0.3);
-        }
-
-        /* --- الأزرار ثلاثية الأبعاد --- */
-        .primary-btn {
-            width: 100%;
             padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        input:focus { border-color: var(--accent-color); }
+
+        button {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 15px 30px;
             border: none;
-            border-radius: 15px;
-            background: linear-gradient(45deg, var(--secondary), var(--accent));
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
+            border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.4);
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .primary-btn:hover {
-            transform: scale(1.03) translateY(-3px);
-            box-shadow: 0 15px 25px rgba(255, 75, 43, 0.5);
-        }
-
-        .primary-btn:active { transform: scale(0.98); }
-
-        /* --- واجهة المنيو (تظهر بعد الدخول) --- */
-        #main-header {
-            position: fixed; top: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px 50px;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        #menu-section {
-            display: none;
-            padding: 100px 20px;
             width: 100%;
-            max-width: 1200px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        button:hover { background-color: #e6ac00; transform: translateY(-2px); }
+
+        .error-msg { color: var(--primary-color); background: #fff5f6; padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 20px; display: none; border: 1px solid rgba(231, 76, 60, 0.3); font-weight: 600; }
+
+        /* --- واجهة المنيو (من الكود الأول) --- */
+        #menu-section {
+            display: none; width: 100%; max-width: 1200px;
+            margin-top: 110px; margin-bottom: 50px;
+            animation: fadeInUp 0.6s ease;
         }
 
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .category-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: 0.4s;
-        }
-
-        .category-card:hover { transform: translateY(-10px) rotate(1deg); }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .category-card { background: var(--white); border-radius: 25px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .card-img-wrapper { width: 100%; height: 200px; overflow: hidden; }
+        .category-card img { width: 100%; height: 100%; object-fit: cover; }
+        .card-info { padding: 20px; text-align: right; }
+        
+        /* التذييل */
+        footer { display: none; padding: 30px; color: white; text-align: center; width: 100%; margin-top: auto; }
 
         .hidden { display: none; }
-        .link-text { color: var(--secondary); cursor: pointer; font-weight: bold; text-decoration: underline; }
-
-        .error-msg {
-            background: #ffebee;
-            color: #c62828;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            display: none;
-            font-size: 14px;
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <header id="main-header">
-        <div style="font-weight: bold; font-size: 24px; color: var(--secondary);">
-            <i class="fas fa-utensils"></i> مطعم لذيذ
-        </div>
-        <div id="user-info" style="font-weight: bold;">
-            أهلاً، <span id="user-display-name" style="color: var(--secondary);"></span>
-            <button onclick="location.reload()" style="margin-right: 15px; border: none; background: none; cursor: pointer; color: #666;">
-                <i class="fas fa-sign-out-alt"></i> خروج
-            </button>
+        <a href="#" class="logo"><i class="fas fa-mitten"></i> مطعم لذيذ</a>
+        <div class="user-menu">
+            <i class="fas fa-circle-user"></i>
+            <span id="user-display-name"></span>
+            <div class="dropdown">
+                <a href="#"><i class="fas fa-clock-rotate-left"></i> سجل الطلبات</a>
+                <a href="#" onclick="location.reload();"><i class="fas fa-power-off"></i> خروج</a>
+            </div>
         </div>
     </header>
 
-    <div id="register-card" class="auth-card">
-        <h2>حساب جديد</h2>
-        <p>ابدأ رحلة التذوق معنا اليوم</p>
-        <form id="register-form">
-            <input type="text" id="reg-name" placeholder="الاسم الكامل" required style="margin-bottom: 15px;">
-            <input type="email" id="reg-email" placeholder="البريد الإلكتروني" required style="margin-bottom: 15px;">
-            <input type="password" id="reg-pass" placeholder="كلمة المرور" required style="margin-bottom: 20px;">
-            <button type="submit" class="primary-btn">إنشاء الحساب</button>
-        </form>
-        <p style="margin-top: 20px;">لديك حساب بالفعل؟ <span class="link-text" onclick="showLogin()">سجل دخولك</span></p>
-    </div>
-
-    <div id="login-card" class="auth-card hidden">
-        <h2>تسجيل الدخول</h2>
-        <p>مرحباً بك مجدداً في مطعمنا</p>
-        <div id="login-error" class="error-msg">⚠️ البيانات غير صحيحة</div>
-        <form id="login-form">
-            <input type="email" id="login-email-input" placeholder="البريد الإلكتروني" required style="margin-bottom: 15px;">
-            <input type="password" id="login-pass-input" placeholder="كلمة المرور" required style="margin-bottom: 20px;">
-            <button type="submit" class="primary-btn">دخول آمن</button>
-        </form>
-        <p style="margin-top: 20px;">عضو جديد؟ <span class="link-text" onclick="showRegister()">سجل الآن</span></p>
+    <div id="login-container" class="login-container">
+        <div class="login-box">
+            <h1>تسجيل الدخول</h1>
+            <div id="login-error" class="error-msg">⚠️ خطأ في البيانات، حاول مجدداً.</div>
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="اسم المستخدم (أو البريد)" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="كلمة المرور" required>
+                </div>
+                <button type="submit">دخول</button>
+            </form>
+            <p style="margin-top: 15px; font-size: 14px;">ملاحظة: استخدم أي بيانات للدخول (تجريبي)</p>
+        </div>
     </div>
 
     <div id="menu-section">
-        <h1 style="text-align: center; color: white; text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">قائمة الطعام الملكية</h1>
+        <div style="text-align: center; color: white; margin-bottom: 40px;">
+            <h1 id="welcome-title" style="color: white;">يا هلا بك ✨</h1>
+            <p>استكشف أطباقنا الحصرية</p>
+        </div>
+        
         <div class="category-grid">
             <div class="category-card">
-                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" style="width: 100%; height: 200px; object-fit: cover;">
-                <div style="padding: 20px;">
-                    <h3>المشاوي الفاخرة</h3>
-                    <p style="font-size: 14px; color: #777;">أجود أنواع اللحوم على الفحم.</p>
-                    <button class="primary-btn" style="margin-top: 15px; padding: 10px; font-size: 14px;">اطلب الآن</button>
+                <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600" alt="مشاوي"></div>
+                <div class="card-info">
+                    <h3>ركن المشاوي الفاخرة</h3>
+                    <p>أجود أنواع اللحوم المشوية على الفحم.</p>
                 </div>
             </div>
+            <div class="category-card">
+                <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" alt="بيتزا"></div>
+                <div class="card-info">
+                    <h3>البيتزا الإيطالية</h3>
+                    <p>عجينة رقيقة وهشة بإضافات مميزة.</p>
+                </div>
             </div>
+        </div>
     </div>
 
+    <footer id="main-footer">
+        <p>جميع الحقوق محفوظة &copy; 2024 | تصميم <strong>برمودا</strong></p>
+    </footer>
+
     <script>
-        const regCard = document.getElementById('register-card');
-        const loginCard = document.getElementById('login-card');
+        const loginForm = document.getElementById('login-form');
+        const loginContainer = document.getElementById('login-container');
         const menuSection = document.getElementById('menu-section');
         const mainHeader = document.getElementById('main-header');
+        const mainFooter = document.getElementById('main-footer');
 
-        function showLogin() { 
-            regCard.classList.add('hidden'); 
-            loginCard.classList.remove('hidden'); 
-        }
-        
-        function showRegister() { 
-            loginCard.classList.add('hidden'); 
-            regCard.classList.remove('hidden'); 
-        }
-
-        // تسجيل البيانات في LocalStorage
-        document.getElementById('register-form').addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const user = {
-                name: document.getElementById('reg-name').value,
-                email: document.getElementById('reg-email').value,
-                pass: document.getElementById('reg-pass').value
-            };
-            localStorage.setItem('restaurantUser', JSON.stringify(user));
-            alert("تم إنشاء الحساب بنجاح!");
-            showLogin();
-        });
-
-        // التحقق من الدخول
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailIn = document.getElementById('login-email-input').value;
-            const passIn = document.getElementById('login-pass-input').value;
-            const storedUser = JSON.parse(localStorage.getItem('restaurantUser'));
-
-            if (storedUser && emailIn === storedUser.email && passIn === storedUser.pass) {
-                loginSuccess(storedUser.name);
-            } else {
-                document.getElementById('login-error').style.display = 'block';
-            }
-        });
-
-        function loginSuccess(name) {
-            regCard.style.display = 'none';
-            loginCard.style.display = 'none';
+            
+            const user = document.getElementById('username').value;
+            
+            // محاكاة الدخول
+            document.getElementById('user-display-name').innerText = user;
+            document.getElementById('welcome-title').innerText = `يا هلا بـ ${user} في مطعم لذيذ ✨`;
+            
+            // إخفاء تسجيل الدخول وإظهار المحتوى
+            loginContainer.style.display = 'none';
             mainHeader.style.display = 'flex';
             menuSection.style.display = 'block';
-            document.getElementById('user-display-name').innerText = name;
-            // تغيير خلفية الصفحة لتناسب المنيو
-            document.body.style.background = "#f4f4f4";
-            document.body.style.alignItems = "flex-start";
-        }
+            mainFooter.style.display = 'block';
+            
+            // تغيير الخلفية
+            document.body.style.background = "#f8f9fa";
+            document.body.style.justifyContent = "flex-start";
+        });
     </script>
 </body>
 </html>
