@@ -3,378 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم لذيذ | تجربة طعام واقعية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>مطعم لذيذ | تجربة 3D فاخرة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- متغيرات الألوان لتصميم متناسق --- */
         :root {
-            --primary-color: #e74c3c; /* أحمر غني للشهية */
-            --accent-color: #f39c12; /* ذهبي للجودة */
-            --bg-color: #f8f9fa;
-            --text-dark: #2c3e50;
-            --text-light: #7f8c8d;
-            --white: #ffffff;
-            --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            --whatsapp-color: #25D366;
+            --primary: #ff416c; /* أحمر ناري */
+            --secondary: #ff4b2b; /* برتقالي محمر */
+            --accent: #ffb800; /* أصفر ذهبي */
+            --glass: rgba(255, 255, 255, 0.15);
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
 
-        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; transition: 0.3s ease; }
-        
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
+
         body {
-            min-height: 100vh; display: flex; justify-content: center; align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80');
-            background-size: cover; background-attachment: fixed; background-position: center;
-            padding: 20px; flex-direction: column;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* تدرج لوني مودرن يجمع الأصفر والأحمر */
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 50%, #ffb800 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        /* --- الهيدر الاحترافي (شفاف جزئياً) --- */
-        header {
-            display: none; position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.95); padding: 15px 8%;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1); z-index: 1000;
-            justify-content: space-between; align-items: center;
-            backdrop-filter: blur(5px);
+        /* تأثير الخلفية العائمة (اختياري لزيادة الـ 3D) */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 300px; height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -100px; right: -100px;
+            z-index: -1;
         }
 
-        .logo { font-weight: 700; font-size: 26px; color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .logo i { font-size: 30px; }
-
-        /* القائمة المنسدلة المحسنة */
-        .user-menu { position: relative; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--text-dark); padding: 5px 10px; border-radius: 50px; background: #f1f2f6; }
-        .user-menu:hover { background: #dfe4ea; }
-        .user-menu i.fa-circle-user { font-size: 24px; color: var(--primary-color); }
-        
-        .dropdown {
-            position: absolute; top: 120%; left: 0; background: var(--white);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-radius: 15px; width: 240px;
-            display: none; flex-direction: column; overflow: hidden;
-            animation: fadeInDown 0.4s ease; border: 1px solid #eee;
-        }
-        .dropdown a { padding: 15px 20px; text-decoration: none; color: var(--text-dark); font-size: 15px; border-bottom: 1px solid #f8f9fa; display: flex; align-items: center; gap: 12px; }
-        .dropdown a i { color: var(--primary-color); width: 20px; text-align: center; }
-        .dropdown a:hover { background: #fff5f6; color: var(--primary-color); padding-right: 25px; }
-        .dropdown a .fa-whatsapp { color: var(--whatsapp-color); font-size: 18px; }
-        .dropdown a:hover .fa-whatsapp { color: var(--whatsapp-color); }
-        .user-menu:hover .dropdown { display: flex; }
-
-        /* --- واجهة الدخول والتسجيل --- */
+        /* --- تصميم الكاريد ثلاثي الأبعاد --- */
         .auth-card {
-            background: rgba(255, 255, 255, 0.9); border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4); width: 480px; max-width: 100%;
-            padding: 50px; text-align: center; backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            /* ظل ثلاثي الأبعاد عميق */
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.15), 
+                        -5px -5px 20px rgba(255,255,255,0.5);
             border: 1px solid rgba(255,255,255,0.2);
+            transform-style: preserve-3d;
+            animation: float 4s ease-in-out infinite;
         }
-        .auth-card h2 { color: var(--text-dark); font-size: 28px; margin-bottom: 10px; font-weight: 700; }
-        .auth-card p { color: var(--text-light); margin-bottom: 35px; font-size: 15px; }
 
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-15px) rotateX(2deg); }
+        }
+
+        .auth-card h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .auth-card p { color: #666; margin-bottom: 30px; }
+
+        /* --- المدخلات بتصميم ناعم --- */
+        .input-group { position: relative; margin-bottom: 20px; }
+        
         input {
-            width: 100%; padding: 15px 20px; margin-bottom: 15px;
-            border: 2px solid #eee; border-radius: 15px; outline: none;
-            font-size: 15px; background: var(--white);
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 15px;
+            outline: none;
+            font-size: 16px;
+            box-shadow: inset 4px 4px 8px #d1d1d1, 
+                        inset -4px -4px 8px #ffffff; /* تأثير Neumorphism */
+            transition: 0.3s;
         }
-        input:focus { border-color: var(--primary-color); box-shadow: 0 5px 15px rgba(231, 76, 60, 0.1); }
 
+        input:focus {
+            box-shadow: inset 2px 2px 5px #d1d1d1, 
+                        inset -2px -2px 5px #ffffff,
+                        0 0 10px rgba(255, 75, 43, 0.3);
+        }
+
+        /* --- الأزرار ثلاثية الأبعاد --- */
         .primary-btn {
-            width: 100%; padding: 16px; border: none; border-radius: 15px;
-            background: linear-gradient(45deg, var(--primary-color), #ff6b81);
-            color: var(--white); font-size: 17px; font-weight: 700;
-            cursor: pointer; box-shadow: 0 5px 20px rgba(231, 76, 60, 0.3);
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.4);
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .primary-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4); }
 
-        .error-msg { color: var(--primary-color); background: #fff5f6; padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 20px; display: none; border: 1px solid rgba(231, 76, 60, 0.3); font-weight: 600; }
+        .primary-btn:hover {
+            transform: scale(1.03) translateY(-3px);
+            box-shadow: 0 15px 25px rgba(255, 75, 43, 0.5);
+        }
 
-        /* --- واجهة المنيو الواقعية --- */
+        .primary-btn:active { transform: scale(0.98); }
+
+        /* --- واجهة المنيو (تظهر بعد الدخول) --- */
+        #main-header {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 50px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
         #menu-section {
-            display: none; width: 100%; max-width: 1200px;
-            margin-top: 110px; margin-bottom: 50px;
-            animation: fadeInUp 0.6s ease;
+            display: none;
+            padding: 100px 20px;
+            width: 100%;
+            max-width: 1200px;
         }
 
-        .menu-header { text-align: center; margin-bottom: 50px; color: var(--white); }
-        .menu-header h1 { font-size: 36px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        .menu-header p { font-size: 18px; opacity: 0.9; margin-top: 10px; }
-
-        /* شبكة التصنيفات */
         .category-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
         }
 
         .category-card {
-            background: var(--white); border-radius: 25px; overflow: hidden;
-            box-shadow: var(--shadow); border: 1px solid #eee;
-        }
-        .category-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
-
-        .card-img-wrapper { width: 100%; height: 250px; overflow: hidden; position: relative; }
-        .category-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .category-card:hover img { transform: scale(1.1); }
-        
-        .card-img-wrapper::after {
-            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: 0.4s;
         }
 
-        .card-info { padding: 25px; text-align: right; }
-        .card-info h3 { font-size: 22px; color: var(--text-dark); font-weight: 700; margin-bottom: 8px; }
-        .card-info p { color: var(--text-light); font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
-        
-        .card-action { display: flex; justify-content: space-between; align-items: center; }
-        .item-count { font-size: 14px; color: var(--primary-color); font-weight: 600; background: #fff5f6; padding: 5px 12px; border-radius: 50px; }
-        
-        .explore-btn {
-            padding: 10px 20px; background: transparent; border: 2px solid var(--primary-color);
-            color: var(--primary-color); border-radius: 50px; font-weight: 700; font-size: 14px;
-            cursor: pointer; text-decoration: none;
-        }
-        .explore-btn:hover { background: var(--primary-color); color: var(--white); }
-
-        /* --- التذييل --- */
-        footer {
-            display: none; padding: 30px; color: rgba(255,255,255,0.8);
-            text-align: center; width: 100%; font-size: 14px; margin-top: auto;
-        }
-        footer strong { color: var(--accent-color); font-weight: 700; font-size: 16px; }
-
-        /* --- التحريكات --- */
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .category-card:hover { transform: translateY(-10px) rotate(1deg); }
 
         .hidden { display: none; }
-        .link-text { color: var(--primary-color); cursor: pointer; font-weight: 600; text-decoration: none; }
-        .link-text:hover { text-decoration: underline; }
+        .link-text { color: var(--secondary); cursor: pointer; font-weight: bold; text-decoration: underline; }
 
-        /* متجاوب مع الشاشات الصغيرة */
-        @media (max-width: 600px) {
-            .auth-card { padding: 30px; }
-            .menu-header h1 { font-size: 28px; }
-            .category-grid { grid-template-columns: 1fr; }
+        .error-msg {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
     <header id="main-header">
-        <a href="#" class="logo"><i class="fas fa-mitten"></i> مطعم لذيذ</a>
-        
-        <div class="user-menu">
-            <i class="fas fa-circle-user"></i>
-            <span><strong id="user-display-name"></strong></span>
-            <i class="fas fa-chevron-down" style="font-size: 12px; opacity: 0.7;"></i>
-            
-            <div class="dropdown">
-                <a href="#"><i class="fas fa-clock-rotate-left"></i> سجل الطلبات</a>
-                <a href="#"><i class="fas fa-wallet"></i> محفظتي وطرق الدفع</a>
-                <a href="#"><i class="fas fa-map-location-dot"></i> عناوين التوصيل</a>
-                
-                <!-- رابط واتساب مباشر للدعم الفني -->
-                <a href="https://wa.me/+249120737160?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن.." target="_blank" style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>الدعم الفني المباشر</span>
-                </a>
-                
-                <a href="#" onclick="event.preventDefault(); location.reload();" style="color: var(--primary-color); border-top: 1px solid #eee; margin-top: 5px;">
-                    <i class="fas fa-power-off"></i> تسجيل الخروج آمن
-                </a>
-            </div>
+        <div style="font-weight: bold; font-size: 24px; color: var(--secondary);">
+            <i class="fas fa-utensils"></i> مطعم لذيذ
+        </div>
+        <div id="user-info" style="font-weight: bold;">
+            أهلاً، <span id="user-display-name" style="color: var(--secondary);"></span>
+            <button onclick="location.reload()" style="margin-right: 15px; border: none; background: none; cursor: pointer; color: #666;">
+                <i class="fas fa-sign-out-alt"></i> خروج
+            </button>
         </div>
     </header>
 
     <div id="register-card" class="auth-card">
-        <h2>اكتشف طعم الجودة</h2>
-        <p>أنشئ حسابك المجاني للوصول إلى أفخم المأكولات</p>
+        <h2>حساب جديد</h2>
+        <p>ابدأ رحلة التذوق معنا اليوم</p>
         <form id="register-form">
-            <input type="text" id="reg-name" placeholder="الاسم الكامل (مثال: أحمد محمد)" required>
-            <input type="email" id="reg-email" placeholder="البريد الإلكتروني الذكي" required>
-            <input type="password" id="reg-pass" placeholder="كلمة المرور القوية" required>
-            <button type="submit" class="primary-btn">ابدأ رحلة التذوق</button>
+            <input type="text" id="reg-name" placeholder="الاسم الكامل" required style="margin-bottom: 15px;">
+            <input type="email" id="reg-email" placeholder="البريد الإلكتروني" required style="margin-bottom: 15px;">
+            <input type="password" id="reg-pass" placeholder="كلمة المرور" required style="margin-bottom: 20px;">
+            <button type="submit" class="primary-btn">إنشاء الحساب</button>
         </form>
-        <p style="margin-top: 25px;">لديك حساب؟ <span class="link-text" onclick="showLogin()">سجل دخولك الآن</span></p>
+        <p style="margin-top: 20px;">لديك حساب بالفعل؟ <span class="link-text" onclick="showLogin()">سجل دخولك</span></p>
     </div>
 
     <div id="login-card" class="auth-card hidden">
-        <h2>مرحباً بك مجدداً</h2>
-        <p>ادخل بياناتك الآمنة للمتابعة</p>
-        <div id="login-error" class="error-msg">⚠️ عذراً، البريد أو كلمة السر لا تتطابق مع سجلاتنا.</div>
+        <h2>تسجيل الدخول</h2>
+        <p>مرحباً بك مجدداً في مطعمنا</p>
+        <div id="login-error" class="error-msg">⚠️ البيانات غير صحيحة</div>
         <form id="login-form">
-            <input type="email" id="login-email-input" placeholder="بريدك الإلكتروني المسجل" required>
-            <input type="password" id="login-pass-input" placeholder="كلمة المرور" required>
-            <button type="submit" class="primary-btn">دخول آمن للملف</button>
+            <input type="email" id="login-email-input" placeholder="البريد الإلكتروني" required style="margin-bottom: 15px;">
+            <input type="password" id="login-pass-input" placeholder="كلمة المرور" required style="margin-bottom: 20px;">
+            <button type="submit" class="primary-btn">دخول آمن</button>
         </form>
-        <p style="margin-top: 25px;">جديد علينا؟ <span class="link-text" onclick="showRegister()">افتح حسابك في ثواني</span></p>
+        <p style="margin-top: 20px;">عضو جديد؟ <span class="link-text" onclick="showRegister()">سجل الآن</span></p>
     </div>
 
     <div id="menu-section">
-        <div class="menu-header">
-            <h1 id="welcome-title">يا هلا بك في مطعم لذيذ ✨</h1>
-            <p>اختر فئتك المفضلة واستكشف أطباقنا الحصرية المعدة بشغف</p>
-        </div>
-        
+        <h1 style="text-align: center; color: white; text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">قائمة الطعام الملكية</h1>
         <div class="category-grid">
             <div class="category-card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="مشاوي">
-                </div>
-                <div class="card-info">
-                    <h3>ركن المشاوي الفاخرة</h3>
-                    <p>تشكيلة من أجود أنواع اللحوم والدجاج المشوي على الفحم الطبيعي بتتبيلة لذيذة الخاصة.</p>
-                    <div class="card-action">
-                        <span class="item-count">25 صنف</span>
-                        <a href="#" class="explore-btn">استكشف المشاوي <i class="fas fa-arrow-left"></i></a>
-                    </div>
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" style="width: 100%; height: 200px; object-fit: cover;">
+                <div style="padding: 20px;">
+                    <h3>المشاوي الفاخرة</h3>
+                    <p style="font-size: 14px; color: #777;">أجود أنواع اللحوم على الفحم.</p>
+                    <button class="primary-btn" style="margin-top: 15px; padding: 10px; font-size: 14px;">اطلب الآن</button>
                 </div>
             </div>
-
-            <div class="category-card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80" alt="عصائر">
-                </div>
-                <div class="card-info">
-                    <h3>العصائر الطبيعية والكوكتيل</h3>
-                    <p>انتعاش حقيقي مع عصائرنا الطازجة 100% وخالطاتنا المبتكرة والباردة.</p>
-                    <div class="card-action">
-                        <span class="item-count">40 صنف</span>
-                        <a href="#" class="explore-btn">اطلب انتعاشك <i class="fas fa-arrow-left"></i></a>
-                    </div>
-                </div>
             </div>
-
-            <div class="category-card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1627662168383-7d5267a57a8a?auto=format&fit=crop&w=600&q=80" alt="فطائر">
-                </div>
-                <div class="card-info">
-                    <h3>الفطائر والمعجنات الطازجة</h3>
-                    <p>مخبوزات ساخنة وهشة، من التنور مباشرة، بحشوات متنوعة وغنية ترضي ذوقك.</p>
-                    <div class="card-action">
-                        <span class="item-count">30 صنف</span>
-                        <a href="#" class="explore-btn">تصفح المخبوزات <i class="fas fa-arrow-left"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category-card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80" alt="بيتزا">
-                </div>
-                <div class="card-info">
-                    <h3>البيتزا الإيطالية الأصيلة</h3>
-                    <p>عجينة رقيقة وهشة، صلصة غنية، وجبنة موزاريلا فاخرة مع إضافاتك المفضلة.</p>
-                    <div class="card-action">
-                        <span class="item-count">20 صنف</span>
-                        <a href="#" class="explore-btn">اختر بيتزاك <i class="fas fa-arrow-left"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category-card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80" alt="آيسكريم">
-                </div>
-                <div class="card-info">
-                    <h3>الآيسكريم والحلوى الباردة</h3>
-                    <p>نهاية سعيدة لكل وجبة مع نكهات الآيسكريم الغنية والحلويات الباردة والمبتكرة.</p>
-                    <div class="card-action">
-                        <span class="item-count">35 نكهة</span>
-                        <a href="#" class="explore-btn">حلي وقتك <i class="fas fa-arrow-left"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <footer id="main-footer">
-        <p>جميع الحقوق محفوظة &copy; 2024 - خدمة عملاء مطعم لذيذ على مدار الساعة</p>
-        <p>تم التصميم والتطوير باحترافية بواسطة <strong>برمودا</strong></p>
-    </footer>
-
     <script>
-        // --- منطق الحماية والدخول (localStorage) ---
-        
         const regCard = document.getElementById('register-card');
         const loginCard = document.getElementById('login-card');
         const menuSection = document.getElementById('menu-section');
         const mainHeader = document.getElementById('main-header');
-        const mainFooter = document.getElementById('main-footer');
 
-        // وظائف التبديل بين اللوحات
-        window.showLogin = function() { 
+        function showLogin() { 
             regCard.classList.add('hidden'); 
             loginCard.classList.remove('hidden'); 
         }
         
-        window.showRegister = function() { 
+        function showRegister() { 
             loginCard.classList.add('hidden'); 
             regCard.classList.remove('hidden'); 
         }
 
-        // 1. عند إنشاء حساب: حفظ البيانات في localStorage
+        // تسجيل البيانات في LocalStorage
         document.getElementById('register-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const userAccount = {
+            const user = {
                 name: document.getElementById('reg-name').value,
                 email: document.getElementById('reg-email').value,
                 pass: document.getElementById('reg-pass').value
             };
-
-            // حفظ البيانات ككائن JSON
-            localStorage.setItem('lazezaUser', JSON.stringify(userAccount));
-            
-            alert("شكراً لتسجيلك! تم حفظ بياناتك بأمان. يرجى تسجيل الدخول الآن.");
+            localStorage.setItem('restaurantUser', JSON.stringify(user));
+            alert("تم إنشاء الحساب بنجاح!");
             showLogin();
         });
 
-        // 2. عند تسجيل الدخول: التحقق من البيانات المحفوظة
+        // التحقق من الدخول
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const emailIn = document.getElementById('login-email-input').value;
             const passIn = document.getElementById('login-pass-input').value;
-            const errorDiv = document.getElementById('login-error');
+            const storedUser = JSON.parse(localStorage.getItem('restaurantUser'));
 
-            // جلب البيانات المحفوظة
-            const storedData = JSON.parse(localStorage.getItem('lazezaUser'));
-
-            // مقارنة البيانات
-            if (storedData && emailIn === storedData.email && passIn === storedData.pass) {
-                errorDiv.style.display = 'none';
-                loginUser(storedData.name); // السماح بالدخول بالاسم الحقيقي
+            if (storedUser && emailIn === storedUser.email && passIn === storedUser.pass) {
+                loginSuccess(storedUser.name);
             } else {
-                errorDiv.style.display = 'block'; // إظهار رسالة خطأ
-                document.getElementById('login-pass-input').value = ""; // مسح الحقل
+                document.getElementById('login-error').style.display = 'block';
             }
         });
 
-        // دالة الدخول وتفعيل الواجهة الواقعية
-        function loginUser(name) {
-            // 1. تحديث الاسم في كل مكان
-            document.getElementById('user-display-name').innerText = name;
-            document.getElementById('welcome-title').innerText = `يا هلا بـ ${name} في مطعم لذيذ ✨`;
-            
-            // 2. إخفاء لوحات التحقق
+        function loginSuccess(name) {
             regCard.style.display = 'none';
             loginCard.style.display = 'none';
-            
-            // 3. إظهار الواجهة الداخلية بحركة ناعمة
             mainHeader.style.display = 'flex';
             menuSection.style.display = 'block';
-            mainFooter.style.display = 'block';
-            
-            // 4. تغيير الخلفية لتصبح مريحة للتصفح الواقعي
-            document.body.style.background = "var(--bg-color)";
-            document.body.style.alignItems = "stretch";
-            document.body.style.paddingTop = "0";
+            document.getElementById('user-display-name').innerText = name;
+            // تغيير خلفية الصفحة لتناسب المنيو
+            document.body.style.background = "#f4f4f4";
+            document.body.style.alignItems = "flex-start";
         }
-
-        // معالجة رابط تسجيل الخروج
-        document.querySelector('.dropdown a[href="#"]:last-child').addEventListener('click', function(e) {
-            e.preventDefault();
-            location.reload();
-        });
     </script>
 </body>
 </html>
+
