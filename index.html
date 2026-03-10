@@ -3,199 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم لذيذ | تجربة طعام واقعية</title>
+    <title>مطعم لذيذ | تصميم برمودا</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
             --primary-color: #e74c3c;
-            --accent-color: #f39c12;
-            --whatsapp-color: #25D366;
+            --ramadan-gold: #f39c12;
+            --ramadan-blue: #2c3e50;
             --bg-color: #f8f9fa;
-            --text-dark: #2c3e50;
-            --text-light: #7f8c8d;
             --white: #ffffff;
-            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; transition: 0.3s ease; }
         
         body {
             min-height: 100vh; display: flex; justify-content: center; align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80');
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1600&q=80');
             background-size: cover; background-attachment: fixed; background-position: center;
-            padding: 20px; flex-direction: column;
+            flex-direction: column; overflow-x: hidden;
         }
 
+        /* --- زينة رمضان --- */
+        .ramadan-decor { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-around; z-index: 2000; pointer-events: none; }
+        .lantern { width: 45px; animation: swing 3s infinite ease-in-out; transform-origin: top center; filter: drop-shadow(0 0 10px var(--ramadan-gold)); }
+        @keyframes swing { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
+
+        /* --- الهيدر (تصميم برمودا) --- */
         header {
             display: none; position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.95); padding: 15px 8%;
+            background: rgba(255, 255, 255, 0.98); padding: 12px 8%;
             box-shadow: 0 2px 20px rgba(0,0,0,0.1); z-index: 1000;
-            justify-content: space-between; align-items: center;
-            backdrop-filter: blur(5px);
+            justify-content: space-between; align-items: center; border-bottom: 3px solid var(--ramadan-gold);
         }
+        .logo { font-weight: 700; font-size: 22px; color: var(--ramadan-blue); text-decoration: none; }
+        .bermuda-badge { background: var(--ramadan-blue); color: var(--ramadan-gold); padding: 4px 12px; border-radius: 50px; font-size: 13px; font-weight: 700; }
 
-        .logo { font-weight: 700; font-size: 26px; color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        
-        .user-menu { position: relative; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--text-dark); padding: 5px 15px; border-radius: 50px; background: #f1f2f6; }
-        
-        .dropdown {
-            position: absolute; top: 120%; left: 0; background: var(--white);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-radius: 15px; width: 250px;
-            display: none; flex-direction: column; overflow: hidden;
-            animation: fadeInDown 0.4s ease; border: 1px solid #eee;
-        }
-        .dropdown a { padding: 15px 20px; text-decoration: none; color: var(--text-dark); font-size: 15px; border-bottom: 1px solid #f8f9fa; display: flex; align-items: center; gap: 12px; }
-        .dropdown a i { width: 20px; text-align: center; }
-        .dropdown a:hover { background: #fff5f6; color: var(--primary-color); padding-right: 25px; }
-        .user-menu:hover .dropdown { display: flex; }
-
+        /* --- بطاقات الدخول --- */
         .auth-card {
-            background: rgba(255, 255, 255, 0.9); border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4); width: 480px; max-width: 100%;
-            padding: 50px; text-align: center; backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95); border-radius: 30px; padding: 45px; text-align: center;
+            border: 2px solid var(--ramadan-gold); width: 420px; max-width: 90%; backdrop-filter: blur(10px);
         }
+        input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 12px; font-size: 15px; outline: none; }
+        input:focus { border-color: var(--ramadan-gold); }
+        .primary-btn { width: 100%; padding: 15px; border: none; border-radius: 12px; background: var(--ramadan-blue); color: white; font-weight: 700; cursor: pointer; font-size: 16px; }
 
-        input {
-            width: 100%; padding: 15px 20px; margin-bottom: 15px;
-            border: 2px solid #eee; border-radius: 15px; outline: none; font-size: 15px;
-        }
-        input:focus { border-color: var(--primary-color); }
-
-        .primary-btn {
-            width: 100%; padding: 16px; border: none; border-radius: 15px;
-            background: linear-gradient(45deg, var(--primary-color), #ff6b81);
-            color: var(--white); font-size: 17px; font-weight: 700; cursor: pointer;
-        }
-
-        #menu-section {
-            display: none; width: 100%; max-width: 1200px;
-            margin-top: 110px; margin-bottom: 50px; animation: fadeInUp 0.6s ease;
-        }
-
+        /* --- الواجهة الداخلية --- */
+        #menu-section { display: none; width: 100%; max-width: 1100px; margin-top: 100px; padding: 20px; }
         .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .category-card { background: var(--white); border-radius: 25px; overflow: hidden; box-shadow: var(--shadow); }
-        .card-img-wrapper { width: 100%; height: 250px; overflow: hidden; position: relative; }
-        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .card-info { padding: 25px; text-align: right; }
+        .category-card { 
+            background: white; border-radius: 25px; overflow: hidden; cursor: pointer; 
+            box-shadow: var(--shadow); border-bottom: 5px solid var(--ramadan-gold);
+        }
+        .category-card:hover { transform: translateY(-10px); }
+        .card-img { width: 100%; height: 220px; object-fit: cover; }
 
-        footer { display: none; padding: 30px; color: #777; text-align: center; width: 100%; background: #eee; }
+        /* --- نافذة الفطائر (Modal) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none; justify-content: center;
+            align-items: center; z-index: 3000; backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: var(--white); width: 450px; max-width: 90%; border-radius: 30px;
+            padding: 35px; position: relative; animation: zoomIn 0.3s ease;
+            border: 2px solid var(--ramadan-gold);
+        }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .close-btn { position: absolute; top: 20px; left: 20px; font-size: 24px; cursor: pointer; color: var(--primary-color); }
 
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .menu-list-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5px; border-bottom: 1px dashed #eee;
+        }
+        .item-name { font-weight: 700; color: var(--ramadan-blue); }
+        .item-price { color: var(--primary-color); font-weight: 800; background: #fff5f6; padding: 4px 10px; border-radius: 8px; }
+
+        footer { display: none; padding: 30px; background: var(--ramadan-blue); color: white; text-align: center; width: 100%; margin-top: auto; }
         .hidden { display: none; }
-        .link-text { color: var(--primary-color); cursor: pointer; font-weight: 600; }
     </style>
 </head>
 <body>
 
-    <header id="main-header">
-        <a href="#" class="logo"><i class="fas fa-mitten"></i> مطعم لذيذ</a>
-        <div class="user-menu">
-            <i class="fas fa-circle-user" style="color: var(--primary-color); font-size: 24px;"></i>
-            <span id="user-display-name"></span>
-            <i class="fas fa-chevron-down" style="font-size: 12px; opacity: 0.7;"></i>
-            <div class="dropdown">
-                <a href="#"><i class="fas fa-clock-rotate-left" style="color: var(--primary-color);"></i> سجل الطلبات</a>
-                <a href="#"><i class="fas fa-wallet" style="color: var(--primary-color);"></i> المحفظة</a>
-                
-                <a href="https://wa.me/+249120737160?text=مرحباً، أحتاج إلى مساعدة بخصوص طلب من مطعم لذيذ" target="_blank">
-                    <i class="fab fa-whatsapp" style="color: var(--whatsapp-color); font-size: 20px;"></i> 
-                    الدعم الفني المباشر
-                </a>
-
-                <a href="#" onclick="location.reload()" style="color: var(--primary-color); border-top: 1px solid #eee;"><i class="fas fa-power-off"></i> تسجيل الخروج</a>
-            </div>
-        </div>
-    </header>
-
-    <div id="register-card" class="auth-card">
-        <h2>أنشئ حسابك المجاني</h2>
-        <p>استمتع بأفخم المأكولات بضغطة زر</p>
-        <form id="register-form">
-            <input type="text" id="reg-name" placeholder="الاسم الكامل" required>
-            <input type="email" id="reg-email" placeholder="البريد الإلكتروني" required>
-            <input type="password" id="reg-pass" placeholder="كلمة المرور" required>
-            <button type="submit" class="primary-btn">ابدأ الآن</button>
-        </form>
-        <p style="margin-top: 25px;">لديك حساب؟ <span class="link-text" onclick="showLogin()">سجل دخولك</span></p>
+    <div class="ramadan-decor">
+        <img src="https://cdn-icons-png.flaticon.com/512/2210/2210317.png" class="lantern">
+        <img src="https://cdn-icons-png.flaticon.com/512/2210/2210317.png" class="lantern" style="animation-delay: 0.5s">
+        <img src="https://cdn-icons-png.flaticon.com/512/2210/2210317.png" class="lantern" style="animation-delay: 1.2s">
     </div>
 
-    <div id="login-card" class="auth-card hidden">
-        <h2>مرحباً بك مجدداً</h2>
-        <p>ادخل بياناتك للمتابعة</p>
-        <form id="login-form">
-            <input type="email" id="login-email-input" placeholder="البريد الإلكتروني" required>
-            <input type="password" id="login-pass-input" placeholder="كلمة المرور" required>
-            <button type="submit" class="primary-btn">دخول</button>
-        </form>
-        <p style="margin-top: 25px;">جديد؟ <span class="link-text" onclick="showRegister()">افتح حسابك</span></p>
+    <header id="main-header">
+        <a href="#" class="logo">🌙 مطعم لذيذ</a>
+        <div class="bermuda-badge">تم التصميم بواسطة برمودا</div>
+    </header>
+
+    <div id="auth-container">
+        <div class="auth-card">
+            <h2 style="color: var(--ramadan-blue)">رمضان يجمعنا ✨</h2>
+            <p style="margin-bottom: 25px; color: #666">سجل اسمك للدخول إلى قائمة الطعام</p>
+            <form id="login-form">
+                <input type="text" id="user-name" placeholder="أدخل اسمك الكريم" required>
+                <button type="submit" class="primary-btn">دخول للمطعم</button>
+            </form>
+        </div>
     </div>
 
     <div id="menu-section">
-        <div style="text-align: center; color: white; margin-bottom: 50px;">
-            <h1 id="welcome-title">قائمة الطعام</h1>
-            <p>اختر ما يشتهيه قلبك</p>
+        <div style="text-align: center; color: white; margin-bottom: 40px;">
+            <h1 id="welcome-msg" style="font-size: 32px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">أهلاً بك</h1>
+            <p>استكشف منيو لذيذ الرمضاني</p>
         </div>
+
         <div class="category-grid">
-            <div class="category-card">
-                <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80"></div>
-                <div class="card-info">
-                    <h3>المشاوي الفاخرة</h3>
-                    <p>تشكيلة من اللحوم المشوية على الفحم الطبيعي.</p>
+            <div class="category-card" onclick="openFatayer()">
+                <img src="https://images.unsplash.com/photo-1589154316315-950f49c04900?auto=format&fit=crop&w=600" class="card-img" alt="فطائر">
+                <div style="padding: 20px; text-align: center;">
+                    <h3 style="color: var(--ramadan-blue)">قسم الفطائر والسمبوسة</h3>
+                    <p style="color: #888; font-size: 13px; margin-top: 5px;">اضغط لعرض الأصناف والأسعار</p>
                 </div>
             </div>
+
             <div class="category-card">
-                <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"></div>
-                <div class="card-info">
-                    <h3>بيتزا إيطالية</h3>
-                    <p>عجينة هشة ومكونات طازجة يومياً.</p>
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600" class="card-img" alt="مشاوي">
+                <div style="padding: 20px; text-align: center;">
+                    <h3 style="color: var(--ramadan-blue)">المشاوي والمقبلات</h3>
+                    <p style="color: #888; font-size: 13px; margin-top: 5px;">تشكيلة المشاوي الفاخرة</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="fatayer-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeFatayer()">&times;</span>
+            <h2 style="text-align: center; color: var(--ramadan-gold); margin-bottom: 25px;">🥐 منيو الفطائر</h2>
+            
+            <div class="menu-list-item">
+                <span class="item-name">فطائر شامية</span>
+                <span class="item-price">4000 ج.س</span>
+            </div>
+            <div class="menu-list-item">
+                <span class="item-name">فطائر طعمية</span>
+                <span class="item-price">1000 ج.س</span>
+            </div>
+            <div class="menu-list-item">
+                <span class="item-name">فطائر بيض</span>
+                <span class="item-price">1000 ج.س</span>
+            </div>
+            <div class="menu-list-item">
+                <span class="item-name">فطائر بيرقر</span>
+                <span class="item-price">4000 ج.س</span>
+            </div>
+            <div class="menu-list-item">
+                <span class="item-name">فطائر شاورما</span>
+                <span class="item-price">4000 ج.س</span>
+            </div>
+
+            <button class="primary-btn" style="margin-top: 25px; background: var(--ramadan-gold);" onclick="window.open('https://wa.me/+249120737160', '_blank')">اطلب الآن عبر الواتساب</button>
         </div>
     </div>
 
     <footer id="main-footer">
-        <p>جميع الحقوق محفوظة &copy; 2026 - مطعم لذيذ</p>
+        <p>جميع الحقوق محفوظة © 2026 | مطعم لذيذ</p>
+        <p style="margin-top: 8px; font-size: 14px;">تم التصميم والتطوير بواسطة <span style="color: var(--ramadan-gold); font-weight: 700;">برمودا</span></p>
     </footer>
 
     <script>
-        const regCard = document.getElementById('register-card');
-        const loginCard = document.getElementById('login-card');
+        const loginForm = document.getElementById('login-form');
+        const authContainer = document.getElementById('auth-container');
         const menuSection = document.getElementById('menu-section');
         const mainHeader = document.getElementById('main-header');
         const mainFooter = document.getElementById('main-footer');
+        const modal = document.getElementById('fatayer-modal');
 
-        function showLogin() { regCard.classList.add('hidden'); loginCard.classList.remove('hidden'); }
-        function showRegister() { loginCard.classList.add('hidden'); regCard.classList.remove('hidden'); }
-
-        document.getElementById('register-form').addEventListener('submit', function(e) {
+        // نظام تسجيل الدخول البسيط
+        loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const user = { name: document.getElementById('reg-name').value, email: document.getElementById('reg-email').value, pass: document.getElementById('reg-pass').value };
-            localStorage.setItem('lazezaUser', JSON.stringify(user));
-            alert("تم التسجيل! سجل دخولك الآن.");
-            showLogin();
-        });
-
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const storedData = JSON.parse(localStorage.getItem('lazezaUser'));
-            if (storedData && document.getElementById('login-email-input').value === storedData.email && document.getElementById('login-pass-input').value === storedData.pass) {
-                loginUser(storedData.name);
-            } else { alert("خطأ في البيانات!"); }
-        });
-
-        function loginUser(name) {
-            document.getElementById('user-display-name').innerText = name;
-            document.getElementById('welcome-title').innerText = `يا هلا بـ ${name} ✨`;
-            regCard.style.display = 'none'; loginCard.style.display = 'none';
-            mainHeader.style.display = 'flex'; menuSection.style.display = 'block'; mainFooter.style.display = 'block';
-            document.body.style.background = "var(--bg-color)";
+            const name = document.getElementById('user-name').value;
+            
+            authContainer.style.display = 'none';
+            mainHeader.style.display = 'flex';
+            menuSection.style.display = 'block';
+            mainFooter.style.display = 'block';
+            
+            document.getElementById('welcome-msg').innerText = `رمضان مبارك يا ${name} ✨`;
+            
+            // تحويل الخلفية للوضع الداخلي الفخم
+            document.body.style.background = "linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('https://www.transparenttextures.com/patterns/dark-matter.png'), #1a2a6c";
             document.body.style.alignItems = "stretch";
+        });
+
+        // وظائف النافذة المنبثقة للفطائر
+        function openFatayer() { modal.style.display = 'flex'; }
+        function closeFatayer() { modal.style.display = 'none'; }
+        
+        // إغلاق النافذة عند الضغط خارجها
+        window.onclick = function(event) {
+            if (event.target == modal) { closeFatayer(); }
         }
     </script>
 </body>
 </html>
-
