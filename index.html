@@ -17,6 +17,7 @@
             --text-light: #7f8c8d;
             --white: #ffffff;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --whatsapp-color: #25D366;
         }
 
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; transition: 0.3s ease; }
@@ -24,7 +25,7 @@
         body {
             min-height: 100vh; display: flex; justify-content: center; align-items: center;
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80'); /* خلفية مطعم واقعية هادئة */
+                        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80');
             background-size: cover; background-attachment: fixed; background-position: center;
             padding: 20px; flex-direction: column;
         }
@@ -48,16 +49,18 @@
         
         .dropdown {
             position: absolute; top: 120%; left: 0; background: var(--white);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-radius: 15px; width: 220px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-radius: 15px; width: 240px;
             display: none; flex-direction: column; overflow: hidden;
             animation: fadeInDown 0.4s ease; border: 1px solid #eee;
         }
         .dropdown a { padding: 15px 20px; text-decoration: none; color: var(--text-dark); font-size: 15px; border-bottom: 1px solid #f8f9fa; display: flex; align-items: center; gap: 12px; }
         .dropdown a i { color: var(--primary-color); width: 20px; text-align: center; }
         .dropdown a:hover { background: #fff5f6; color: var(--primary-color); padding-right: 25px; }
+        .dropdown a .fa-whatsapp { color: var(--whatsapp-color); font-size: 18px; }
+        .dropdown a:hover .fa-whatsapp { color: var(--whatsapp-color); }
         .user-menu:hover .dropdown { display: flex; }
 
-        /* --- واجهة الدخول والتسجيل (Glassmorphism Light) --- */
+        /* --- واجهة الدخول والتسجيل --- */
         .auth-card {
             background: rgba(255, 255, 255, 0.9); border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4); width: 480px; max-width: 100%;
@@ -84,7 +87,7 @@
 
         .error-msg { color: var(--primary-color); background: #fff5f6; padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 20px; display: none; border: 1px solid rgba(231, 76, 60, 0.3); font-weight: 600; }
 
-        /* --- واجهة المنيو الواقعية الجديدة --- */
+        /* --- واجهة المنيو الواقعية --- */
         #menu-section {
             display: none; width: 100%; max-width: 1200px;
             margin-top: 110px; margin-bottom: 50px;
@@ -95,7 +98,7 @@
         .menu-header h1 { font-size: 36px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         .menu-header p { font-size: 18px; opacity: 0.9; margin-top: 10px; }
 
-        /* شبكة التصنيفات الواقعية */
+        /* شبكة التصنيفات */
         .category-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
         }
@@ -103,22 +106,19 @@
         .category-card {
             background: var(--white); border-radius: 25px; overflow: hidden;
             box-shadow: var(--shadow); border: 1px solid #eee;
-            position: relative; group;
         }
         .category-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
 
-        /* تأثير الصورة الواقعية */
         .card-img-wrapper { width: 100%; height: 250px; overflow: hidden; position: relative; }
         .category-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
         .category-card:hover img { transform: scale(1.1); }
         
-        /* تدرج ظلي فوق الصورة للنص */
         .card-img-wrapper::after {
-            content: ''; position: absolute; bottom: 0; left: 0; right: 0; hight: 50%;
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
             background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
         }
 
-        .card-info { padding: 25px; text-align: right; position: relative; }
+        .card-info { padding: 25px; text-align: right; }
         .card-info h3 { font-size: 22px; color: var(--text-dark); font-weight: 700; margin-bottom: 8px; }
         .card-info p { color: var(--text-light); font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
         
@@ -132,14 +132,14 @@
         }
         .explore-btn:hover { background: var(--primary-color); color: var(--white); }
 
-        /* --- التذييل (Footer) --- */
+        /* --- التذييل --- */
         footer {
             display: none; padding: 30px; color: rgba(255,255,255,0.8);
             text-align: center; width: 100%; font-size: 14px; margin-top: auto;
         }
         footer strong { color: var(--accent-color); font-weight: 700; font-size: 16px; }
 
-        /* --- التحريكات (Animations) --- */
+        /* --- التحريكات --- */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -169,8 +169,16 @@
                 <a href="#"><i class="fas fa-clock-rotate-left"></i> سجل الطلبات</a>
                 <a href="#"><i class="fas fa-wallet"></i> محفظتي وطرق الدفع</a>
                 <a href="#"><i class="fas fa-map-location-dot"></i> عناوين التوصيل</a>
-                <a href="#"><i class="fas fa-headset"></i> الدعم الفني المباشر</a>
-                <a href="#" onclick="location.reload()" style="color: var(--primary-color); border-top: 1px solid #eee; margin-top: 5px;"><i class="fas fa-power-off"></i> تسجيل الخروج آمن</a>
+                
+                <!-- رابط واتساب مباشر للدعم الفني -->
+                <a href="https://wa.me/+249120737160?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن.." target="_blank" style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>الدعم الفني المباشر</span>
+                </a>
+                
+                <a href="#" onclick="event.preventDefault(); location.reload();" style="color: var(--primary-color); border-top: 1px solid #eee; margin-top: 5px;">
+                    <i class="fas fa-power-off"></i> تسجيل الخروج آمن
+                </a>
             </div>
         </div>
     </header>
@@ -275,7 +283,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -294,8 +301,15 @@
         const mainFooter = document.getElementById('main-footer');
 
         // وظائف التبديل بين اللوحات
-        function showLogin() { regCard.classList.add('hidden'); loginCard.classList.remove('hidden'); }
-        function showRegister() { loginCard.classList.add('hidden'); regCard.classList.remove('hidden'); }
+        window.showLogin = function() { 
+            regCard.classList.add('hidden'); 
+            loginCard.classList.remove('hidden'); 
+        }
+        
+        window.showRegister = function() { 
+            loginCard.classList.add('hidden'); 
+            regCard.classList.remove('hidden'); 
+        }
 
         // 1. عند إنشاء حساب: حفظ البيانات في localStorage
         document.getElementById('register-form').addEventListener('submit', function(e) {
@@ -352,24 +366,15 @@
             
             // 4. تغيير الخلفية لتصبح مريحة للتصفح الواقعي
             document.body.style.background = "var(--bg-color)";
-            document.body.style.alignItems = "stretch"; // تمدد المحتوى
+            document.body.style.alignItems = "stretch";
             document.body.style.paddingTop = "0";
         }
+
+        // معالجة رابط تسجيل الخروج
+        document.querySelector('.dropdown a[href="#"]:last-child').addEventListener('click', function(e) {
+            e.preventDefault();
+            location.reload();
+        });
     </script>
 </body>
 </html>
-<div class="dropdown">
-    <a href="#"><i class="fas fa-clock-rotate-left"></i> سجل الطلبات</a>
-    <a href="#"><i class="fas fa-wallet"></i> محفظتي وطرق الدفع</a>
-    <a href="#"><i class="fas fa-map-location-dot"></i> عناوين التوصيل</a>
-    
-    <a href="https://wa.me/+249120737160?text=السلام عليكم، أريد الاستفسار عن.." target="_blank">
-        <i class="fab fa-whatsapp" style="color: #25D366; font-size: 18px;"></i> 
-        الدعم الفني المباشر
-    </a>
-    
-    <a href="#" onclick="location.reload()" style="color: var(--primary-color); border-top: 1px solid #eee; margin-top: 5px;">
-        <i class="fas fa-power-off"></i> تسجيل الخروج آمن
-    </a>
-</div>
-
