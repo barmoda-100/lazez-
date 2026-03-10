@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم لذيذ | نظام التحقق من البيانات</title>
+    <title>مطعم لذيذ | نظام الدخول الآمن</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -17,13 +17,24 @@
             background-size: cover; background-attachment: fixed; padding: 20px; flex-direction: column;
         }
 
-        /* الهيدر بعد الدخول */
+        /* الهيدر والقائمة المنسدلة */
         header {
             display: none; position: fixed; top: 0; left: 0; right: 0;
-            background: white; padding: 12px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: white; padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 1000; justify-content: space-between; align-items: center;
         }
 
+        .user-menu { position: relative; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: bold; }
+        .dropdown {
+            position: absolute; top: 100%; left: 0; background: white;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15); border-radius: 12px; width: 200px;
+            display: none; flex-direction: column; overflow: hidden; margin-top: 10px;
+        }
+        .dropdown a { padding: 12px 15px; text-decoration: none; color: #333; font-size: 14px; border-bottom: 1px solid #f8f9fa; display: flex; align-items: center; gap: 10px; }
+        .dropdown a:hover { background: #fff5f6; color: #ff4757; }
+        .user-menu:hover .dropdown { display: flex; }
+
+        /* واجهة الدخول والتسجيل */
         .auth-card {
             background: white; border-radius: 25px; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             width: 450px; max-width: 100%; padding: 40px; text-align: center;
@@ -36,13 +47,12 @@
         }
 
         input { width: 100%; padding: 12px; margin-bottom: 12px; border: 1.5px solid #eee; border-radius: 10px; outline: none; }
-        input:focus { border-color: #ff4757; }
-
         .error-msg { color: #ff4757; background: #fff5f6; padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; display: none; border: 1px solid #ff4757; }
 
+        /* واجهة المنيو */
         #menu-section { display: none; width: 100%; max-width: 1100px; margin-top: 100px; background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 30px; }
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .food-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #eee; text-align: center; }
+        .food-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #eee; text-align: center; padding-bottom: 15px; }
         .food-card img { width: 100%; height: 200px; object-fit: cover; }
 
         footer { display: none; margin-top: 40px; padding: 20px; color: #636e72; text-align: center; width: 100%; }
@@ -54,12 +64,21 @@
 
     <header id="main-header">
         <div style="font-weight: bold; font-size: 22px; color: #ff4757;"><i class="fas fa-utensils"></i> مطعم لذيذ</div>
-        <div style="font-weight: bold;">أهلاً بك، <span id="user-display-name"></span></div>
+        
+        <div class="user-menu">
+            <span>أهلاً بك، <strong id="user-display-name"></strong> <i class="fas fa-chevron-down"></i></span>
+            <div class="dropdown">
+                <a href="#"><i class="fas fa-shopping-basket"></i> الطلبات</a>
+                <a href="#"><i class="fas fa-credit-card"></i> طرق الدفع</a>
+                <a href="#"><i class="fas fa-headset"></i> التواصل معنا</a>
+                <a href="#" onclick="location.reload()" style="color: #ff4757; border-top: 1px solid #eee;"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a>
+            </div>
+        </div>
     </header>
 
     <div id="register-card" class="auth-card">
         <h2>إنشاء حساب جديد</h2>
-        <p>يرجى كتابة بياناتك بدقة لتتمكن من الدخول لاحقاً</p>
+        <p>سجل بياناتك للوصول إلى القائمة</p>
         <form id="register-form">
             <input type="text" id="reg-name" placeholder="الاسم الكامل" required>
             <input type="email" id="reg-email" placeholder="البريد الإلكتروني" required>
@@ -71,25 +90,27 @@
 
     <div id="login-card" class="auth-card hidden">
         <h2>تسجيل الدخول</h2>
-        <div id="login-error" class="error-msg">⚠️ خطأ: البريد أو كلمة السر غير مطابقة للبيانات التي سجلت بها!</div>
+        <div id="login-error" class="error-msg">⚠️ خطأ: البيانات غير مطابقة لما سجلت به!</div>
         <form id="login-form">
             <input type="email" id="login-email-input" placeholder="البريد الإلكتروني" required>
             <input type="password" id="login-pass-input" placeholder="كلمة المرور" required>
-            <button type="submit" class="primary-btn">تحقق ودخول</button>
+            <button type="submit" class="primary-btn">دخول</button>
         </form>
         <p>ليس لديك حساب؟ <span class="link-text" onclick="showRegister()">سجل الآن</span></p>
     </div>
 
     <div id="menu-section">
-        <h1 id="welcome-title" style="text-align:center;">القائمة المختارة ✨</h1>
+        <h1 id="welcome-title" style="text-align:center;">قائمة الطعام ✨</h1>
         <div class="menu-grid">
             <div class="food-card">
                 <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500" alt="برجر">
-                <h3>وجبة برجر لذيذ</h3>
+                <h3>برجر لحم فاخر</h3>
+                <p>35 ريال</p>
             </div>
             <div class="food-card">
                 <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500" alt="بيتزا">
-                <h3>بيتزا إيطالية</h3>
+                <h3>بيتزا سوبريم</h3>
+                <p>42 ريال</p>
             </div>
         </div>
     </div>
@@ -99,40 +120,31 @@
     </footer>
 
     <script>
-        // دالة التسجيل وحفظ البيانات في ذاكرة المتصفح
+        // حفظ البيانات عند التسجيل في localStorage
         document.getElementById('register-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const name = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
-            const pass = document.getElementById('reg-pass').value;
-
-            // حفظ البيانات ككائن (Object) في localStorage
-            const userAccount = { name, email, pass };
+            const userAccount = {
+                name: document.getElementById('reg-name').value,
+                email: document.getElementById('reg-email').value,
+                pass: document.getElementById('reg-pass').value
+            };
             localStorage.setItem('myUserAccount', JSON.stringify(userAccount));
-
-            alert("تم تسجيل حسابك بنجاح! الآن قم بكتابة نفس البيانات للدخول.");
+            alert("تم تسجيل حسابك! استخدم نفس البيانات للدخول.");
             showLogin();
         });
 
-        // دالة تسجيل الدخول والتحقق من البيانات
+        // التحقق عند الدخول
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const emailInput = document.getElementById('login-email-input').value;
-            const passInput = document.getElementById('login-pass-input').value;
-            const errorDiv = document.getElementById('login-error');
+            const emailIn = document.getElementById('login-email-input').value;
+            const passIn = document.getElementById('login-pass-input').value;
+            const stored = JSON.parse(localStorage.getItem('myUserAccount'));
 
-            // جلب البيانات التي تم حفظها عند التسجيل
-            const storedData = JSON.parse(localStorage.getItem('myUserAccount'));
-
-            // التحقق: هل البيانات المدخلة تساوي البيانات المحفوظة؟
-            if (storedData && emailInput === storedData.email && passInput === storedData.pass) {
-                errorDiv.style.display = 'none';
-                loginUser(storedData.name); // السماح بالدخول باستخدام الاسم المحفوظ
+            if (stored && emailIn === stored.email && passIn === stored.pass) {
+                loginUser(stored.name);
             } else {
-                errorDiv.style.display = 'block'; // رفض الدخول وإظهار رسالة الخطأ
-                document.getElementById('login-pass-input').value = ""; // مسح الباسورد الخاطئ
+                document.getElementById('login-error').style.display = 'block';
+                document.getElementById('login-pass-input').value = "";
             }
         });
 
