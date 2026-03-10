@@ -24,17 +24,14 @@
             padding: 20px;
         }
 
-        /* حاوية التسجيل */
+        /* حاوية التسجيل (بدون الصورة الجانبية) */
         .main-container {
-            display: flex;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
+            background: white;
             border-radius: 25px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            width: 900px;
+            width: 500px; /* تقليص العرض ليناسب الواجهة المنفردة */
             max-width: 100%;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
             animation: slideUp 0.8s ease-out;
         }
 
@@ -43,25 +40,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .side-image {
-            flex: 1;
-            background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80');
-            background-size: cover;
-            background-position: center;
-            display: none;
-        }
-        @media (min-width: 768px) { .side-image { display: block; } }
-
         .register-section {
-            flex: 1.2;
-            padding: 30px 45px;
-            background: white;
+            padding: 40px 45px;
             text-align: center;
         }
 
-        .header-box img { width: 50px; margin-bottom: 10px; }
-        h2 { color: #2d3436; margin: 0; font-size: 24px; }
-        p { color: #636e72; font-size: 14px; margin-bottom: 25px; }
+        .header-box img { width: 60px; margin-bottom: 15px; }
+        h2 { color: #2d3436; margin: 0; font-size: 26px; }
+        p { color: #636e72; font-size: 14px; margin-bottom: 30px; }
 
         .form-grid {
             display: grid;
@@ -94,10 +80,11 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 10px;
         }
         .reg-btn:hover { transform: scale(1.02); box-shadow: 0 8px 15px rgba(255,71,87,0.3); }
 
-        .social-text { margin: 20px 0 15px; color: #a4b0be; font-size: 12px; display: flex; align-items: center; }
+        .social-text { margin: 25px 0 15px; color: #a4b0be; font-size: 12px; display: flex; align-items: center; }
         .social-text::before, .social-text::after { content: ""; flex: 1; height: 1px; background: #eee; margin: 0 10px; }
 
         .social-icons { display: flex; justify-content: center; gap: 20px; }
@@ -136,9 +123,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             border: 1px solid #f1f2f6;
         }
-        .food-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
         .food-card img { width: 100%; height: 180px; object-fit: cover; }
-        
         .food-info { padding: 20px; text-align: center; }
         .food-info h3 { margin: 0 0 10px; color: #2d3436; }
         .food-info .price { color: #ff4757; font-size: 1.2rem; font-weight: bold; }
@@ -157,30 +142,27 @@
         .order-btn:hover { background: #ff4757; color: white; }
 
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
     </style>
 </head>
 <body>
 
     <div class="main-container" id="auth-container">
-        <div class="side-image"></div>
         <div class="register-section">
             <div class="header-box">
                 <img src="https://cdn-icons-png.flaticon.com/512/1046/1046771.png" alt="logo">
-                <h2>عضوية جديدة</h2>
-                <p>سجل الآن للانضمام إلى عائلة مطعم لذيذ</p>
+                <h2>حساب جديد</h2> <p>سجل الآن للطلب من مطعم لذيذ</p>
             </div>
 
             <form id="regForm">
                 <div class="form-grid">
                     <div class="input-group"><input type="text" placeholder="الاسم الأول" required></div>
                     <div class="input-group"><input type="text" placeholder="اسم العائلة" required></div>
-                    <div class="input-group full-width"><input type="email" id="email" placeholder="البريد الإلكتروني" required></div>
+                    <div class="input-group full-width"><input type="email" placeholder="البريد الإلكتروني" required></div>
                     <div class="input-group full-width"><input type="tel" placeholder="رقم الهاتف" required></div>
-                    <div class="input-group"><input type="password" id="pass" placeholder="كلمة المرور" required></div>
+                    <div class="input-group"><input type="password" placeholder="كلمة المرور" required></div>
                     <div class="input-group"><input type="password" placeholder="تأكيد الكلمة" required></div>
                 </div>
-                <button type="submit" class="reg-btn">إنشاء حسابي</button>
+                <button type="submit" class="reg-btn">إنشاء الحساب</button>
             </form>
 
             <div class="social-text">أو التسجيل بواسطة</div>
@@ -194,7 +176,7 @@
 
     <div id="menu-section">
         <div class="menu-header">
-            <h1>قائمة مطعم لذيذ الشهية 🍔</h1>
+            <h1>قائمة مطعم لذيذ 🍔</h1>
             <p>نقدم لك أفضل الأطباق بأعلى جودة</p>
         </div>
         
@@ -211,7 +193,7 @@
             <div class="food-card">
                 <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500" alt="بيتزا">
                 <div class="food-info">
-                    <h3>بيتزا إيطالية مشكلة</h3>
+                    <h3>بيتزا إيطالية</h3>
                     <div class="price">42 ريال</div>
                     <button class="order-btn">إضافة للسلة</button>
                 </div>
@@ -220,7 +202,7 @@
             <div class="food-card">
                 <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=500" alt="مشويات">
                 <div class="food-info">
-                    <h3>طبق مشويات مشكل</h3>
+                    <h3>طبق مشويات</h3>
                     <div class="price">55 ريال</div>
                     <button class="order-btn">إضافة للسلة</button>
                 </div>
@@ -229,7 +211,7 @@
             <div class="food-card">
                 <img src="https://images.unsplash.com/photo-1544145945-f904253d0c7b?auto=format&fit=crop&w=500" alt="عصير">
                 <div class="food-info">
-                    <h3>عصير برتقال طازج</h3>
+                    <h3>عصير طازج</h3>
                     <div class="price">15 ريال</div>
                     <button class="order-btn">إضافة للسلة</button>
                 </div>
@@ -240,15 +222,9 @@
     <script>
         document.getElementById('regForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // إخفاء واجهة التسجيل
             document.getElementById('auth-container').style.display = 'none';
-            
-            // إظهار المنيو
             const menu = document.getElementById('menu-section');
             menu.style.display = 'block';
-            
-            // تغيير الخلفية
             document.body.style.background = "#f8f9fa";
             document.body.style.alignItems = "flex-start";
         });
